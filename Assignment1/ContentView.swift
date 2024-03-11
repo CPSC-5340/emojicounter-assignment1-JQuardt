@@ -8,14 +8,50 @@
 import SwiftUI
 
 struct ContentView: View {
+    let emojiArray : Array<String> = ["🤣", "😜", "😀", "🤩", "🥳"]
+    //🤣, 😜, 😀, 🤩, 🥳
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+            Text("Emoji Counter")
+                .bold()
+            List {
+                ForEach(emojiArray, id: \.self) { ele in
+                    EmojiItem(emoji: ele)
+                }
+            }
         }
-        .padding()
+    }
+}
+
+struct EmojiItem: View {
+    @State var emoji : String
+    @State var count : Int = 0
+    
+    var body: some View {
+        HStack {
+            Text("\(emoji)   counter: \(count)")
+            Spacer()
+            Text("+").onTapGesture {
+                count += 1
+            }.font(.system(size: 20))
+             .padding()
+             .overlay(
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.orange, lineWidth: 2)
+             )
+            
+            Text("-").onTapGesture {
+                if count > 0 {
+                    count -= 1
+                }
+            }.font(.system(size: 20))
+             .padding()
+             .overlay(
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color.orange, lineWidth: 2)
+             )
+        }
     }
 }
 
